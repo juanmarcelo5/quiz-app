@@ -5,12 +5,12 @@ const avatarGet = async (req = request,res= response )=>{
   try {
     const avatars = await Usuario.find();
 
-    res.json({
+    res.status(200).json({
       data:avatars
     })
   } catch (error) {
     console.log(error);
-    res.json({
+    res.status(400).json({
       msg:'Ocurrio un error inesperado'
     })
   }

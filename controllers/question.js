@@ -7,11 +7,12 @@ const questionGet = async (req = request, res = response )=> {
     const questions = await Question.find()
     res.status(200).json({
       data:questions,
-      ok:true
     })
   } catch (error) {
     console.log(error);
-    throw new Error('Ocurrio un error inesperado')
+    res.status(400).json({
+      msg:'Ocurrio un error inesperado'    
+    })
   }
   
 }
