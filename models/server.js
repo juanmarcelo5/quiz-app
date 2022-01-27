@@ -1,70 +1,60 @@
-const express = require('express');
+const express = require('express')
 require('dotenv').config()
-const cors = require('cors');
-const { dbConection } = require('../database/config');
+const cors = require('cors')
+const { dbConection } = require('../database/config')
 
 class Server {
+	constructor() {
+		this.app = express()
+		this.port = process.env.PORT || 3000
 
-    constructor() {
-        this.app  = express();
-        this.port = process.env.PORT || 3000;
-        
-        this.pahts = {
-                auth: '/api/auth',
-                question: '/api/question'
-        }
-    
-      
-        
-        //conectar DB
-        this.conectarDb();
-        
-        // Middlewares
-        this.middlewares();
+		this.pahts = {
+			auth: '/api/auth',
+			question: '/api/question',
+		}
 
-        // Rutas de mi aplicación
-        this.routes();
-    }
-    
-    async conectarDb(){
-        await dbConection();
-    }
+		//conectar DB
+		this.conectarDb()
 
-    middlewares() {
-        // CORS
-        this.app.use( cors() );
-        
-        // Lectura y parseo del body
-        this.app.use( express.json() );
-        this.app.use(express.urlencoded({extended:true}))
-    
+		// Middlewares
+		this.middlewares()
 
-        // Directorio Público
-        this.app.use( express.static('public') );
+		// Rutas de mi aplicación
+		this.routes()
+	}
 
-        /* //FileUpload - carga de archivos
+	async conectarDb() {
+		await dbConection()
+	}
+
+	middlewares() {
+		// CORS
+		this.app.use(cors())
+
+		// Lectura y parseo del body
+		this.app.use(express.json())
+		this.app.use(express.urlencoded({ extended: true }))
+
+		// Directorio Público
+		this.app.use(express.static('public'))
+
+		/* //FileUpload - carga de archivos
         this.app.use(fileUpload({
             useTempFiles : true,
             tempFileDir : '/tmp/'
         })); */
+	}
 
-    }
+	routes() {
+		this.app.use(this.pahts.auth, require('../routes/auth'))
+		this.app.use(this.pahts.question, require('../routes/question'))
+	}
 
-    routes() {
-        this.app.use( this.pahts.auth, require('../routes/auth'));
-        this.app.use( this.pahts.question, require('../routes/question'));
-
-    }
-
-    listen() {
-        this.app.listen( this.port, () => {
-            console.log('Servidor corriendo en puerto', this.port );
-        });
-    }
-
+	listen() {
+		this.app.listen(this.port, () => {
+			console.log('Servidor corriendo en puerto', this.port)
+		})
+	}
 }
 
-
-
-
-module.exports = Server;
+module.exports = Server

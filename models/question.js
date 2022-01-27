@@ -1,9 +1,7 @@
-const {Schema,model} = require('mongoose')
+const { Schema, model } = require('mongoose')
 const QuestionSchema = Schema({
-  title:String,
-  answer: { type: Array, default:[] }
-
-
+	title: String,
+	answer: { type: Array, default: [] },
 })
 
-module.exports = model('Question',QuestionSchema)
+module.exports = model('Question', QuestionSchema)
