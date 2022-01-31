@@ -5,6 +5,10 @@ const UsuarioSchema = Schema({
     type:String,
     unique:true,
     required:[true,'El avatar es obligatorio']
+  },
+  score:{
+    type:Number,
+    default: 0 
   }  
 
 })

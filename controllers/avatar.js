@@ -4,6 +4,7 @@ const Usuario = require('../models/avatar')
 const avatarGet = async (req = request, res = response) => {
 	try {
 		const avatars = await Usuario.find()
+
 		res.status(200).json({
 			data: avatars,
 		})
