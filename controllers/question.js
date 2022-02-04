@@ -12,6 +12,7 @@ const questionGet = async (req = request, res = response) => {
 		console.log(error)
 		res.status(400).json({
 			msg: 'Ocurrio un error inesperado',
+			error
 		})
 	}
 }

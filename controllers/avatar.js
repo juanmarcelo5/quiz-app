@@ -12,6 +12,7 @@ const avatarGet = async (req = request, res = response) => {
 		console.log(error)
 		res.status(400).json({
 			msg: 'Ocurrio un error inesperado',
+			error
 		})
 	}
 }
@@ -30,10 +31,12 @@ const avatarPost = async (req = request, res = response) => {
 		if (error.code === 11000) {
 			res.status(400).json({
 				msg: 'El avatar ya existe, favor ingresar otro!',
+				error
 			})
 		}
 		res.status(400).json({
 			msg: 'Ocurrio un error inesperado',
+			error
 		})
 	}
 }
