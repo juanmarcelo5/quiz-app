@@ -1,15 +1,16 @@
 const { request, response } = require('express')
+const { sortArray } = require('../helpers/sortArray')
 const Usuario = require('../models/avatar')
 
 const avatarGet = async (req = request, res = response) => {
 	try {
-		const avatars = await Usuario.find()
+		let avatars = await Usuario.find()
+		avatars = avatars.sort(sortArray)
 
 		res.status(200).json({
 			data: avatars,
 		})
 	} catch (error) {
-		console.log(error)
 		res.status(400).json({
 			msg: 'Ocurrio un error inesperado',
 			error,
@@ -35,20 +36,19 @@ const avatarPost = async (req = request, res = response) => {
 		}
 		res.status(400).json({
 			msg: 'Ocurrio un error inesperado',
-			error
+			error,
 		})
 	}
 }
 
-
 /*Actualizar el puntaje*/
-const avatarScoreUpdate = async (req = request, res = response)=>{
+const avatarScoreUpdate = async (req = request, res = response) => {
 	try {
-		const {avatar:avatarUpdate,score} = req.body
-		console.log(avatarUpdate);
+		const { avatar: avatarUpdate, score } = req.body
 		const avatars = await Usuario.findOneAndUpdate(
-			{'avatar':avatarUpdate},
-			{'score':score})
+			{ avatar: avatarUpdate },
+			{ score: score }
+		)
 		res.status(200).json({
 			data: avatars,
 		})
@@ -58,13 +58,10 @@ const avatarScoreUpdate = async (req = request, res = response)=>{
 			error,
 		})
 	}
-
-
-
-} 
+}
 
 module.exports = {
 	avatarPost,
 	avatarGet,
-	avatarScoreUpdate
+	avatarScoreUpdate,
 }

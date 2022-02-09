@@ -9,22 +9,20 @@ const questionGet = async (req = request, res = response) => {
 			data: questions,
 		})
 	} catch (error) {
-		console.log(error)
 		res.status(400).json({
 			msg: 'Ocurrio un error inesperado',
-			error
+			error,
 		})
 	}
 }
 const questionPost = async (req = request, res = response) => {
 	const body = req.body
-	console.log(body)
-	const PREGUNTA = new Question({ title: body.title, answer: body.answer })
-	await PREGUNTA.save()
+	const pregunta = new Question({ title: body.title, answer: body.answer })
+	await pregunta.save()
 	try {
 		res.status(200).json({
 			msg: 'Pregunta Registrada',
-			PREGUNTA,
+			pregunta,
 		})
 	} catch (error) {
 		res.status(400).json({
